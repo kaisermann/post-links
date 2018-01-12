@@ -11,12 +11,11 @@ const h = (tag, props = {}) => {
 
 const openPostLink = function (e) {
   e.preventDefault()
-  const dataObj = Object.assign({}, this.dataset)
+  const dataObj = this.dataset
 
   // Let's get the action url from a href or a data-post-href attribute
-  hiddenFormEl.action = this.href || this.dataset.postHref
+  hiddenFormEl.action = this.href
   hiddenFormEl.target = this.getAttribute('target') || ''
-  delete dataObj.postHref
 
   const dataKeys = Object.keys(dataObj)
   const formInputEls = hiddenFormEl.childNodes
@@ -53,10 +52,10 @@ const init = () => {
 export default {
   seek () {
     if (!initialized) init()
-    const linkEls = document.querySelectorAll('[data-post-href]')
+    const linkEls = document.getElementsByTagName('a')
     for (let i = linkEls.length; i--;) {
       const linkEl = linkEls[i]
-      if (!linkEl.postLink) {
+      if (linkEl.getAttribute('method') === 'post' && !linkEl.postLink) {
         linkEl.postLink = 1
         linkEl.addEventListener('click', openPostLink)
       }

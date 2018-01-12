@@ -4,22 +4,22 @@ Ever needed to open an URL by clicking a link or a button but without showing yo
 
 ## How to
 
-Just add a `data-post-href` to the element to be clicked. Every `data-property` attribute will be passed as data for the request.
+Just add a `method="post"` to a `<a href="...">` element. Every `data-property` attribute will be passed as data for the request.
 
 ```html
-<button data-post-href="http://example.com/pdf/generate" data-secret-id="123910" data-name="PDF-NAME">
+<a method="post" href="http://example.com/pdf/generate" data-secret-id="123910" data-name="PDF-NAME">
     Download the super secret PDF
-</button>
+</a>
 ```
 
 You can also change the `target=""`.
 
 ```html
-<button data-post-href="http://example.com/pdf/generate" data-secret-id="123910" target="_blank">
+<a method="post" href="http://example.com/pdf/generate" data-secret-id="123910" target="_blank">
     Open in new tab the super secret PDF
-</button>
+</a>
 ```
 
 ## How
 
-`post-links` creates a hidden form and submits it everytime an element containing `data-post-href` is clicked.
+`post-links` creates a hidden form with and submits it via `POST` everytime a `<a method="post">` is clicked.

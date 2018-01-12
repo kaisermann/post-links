@@ -11,10 +11,9 @@ var h = function (tag, props) {
 };
 var openPostLink = function (e) {
     e.preventDefault();
-    var dataObj = Object.assign({}, this.dataset);
-    hiddenFormEl.action = this.href || this.dataset.postHref;
+    var dataObj = this.dataset;
+    hiddenFormEl.action = this.href;
     hiddenFormEl.target = this.getAttribute('target') || '';
-    delete dataObj.postHref;
     var dataKeys = Object.keys(dataObj);
     var formInputEls = hiddenFormEl.childNodes;
     dataKeys.forEach(function (key, i) {
@@ -46,10 +45,10 @@ var index = {
     seek: function seek() {
         if (!initialized) 
             { init(); }
-        var linkEls = document.querySelectorAll('[data-post-href]');
+        var linkEls = document.getElementsByTagName('a');
         for (var i = linkEls.length;i--; ) {
             var linkEl = linkEls[i];
-            if (!linkEl.postLink) {
+            if (linkEl.getAttribute('method') === 'post' && !linkEl.postLink) {
                 linkEl.postLink = 1;
                 linkEl.addEventListener('click', openPostLink);
             }
