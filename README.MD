@@ -23,3 +23,15 @@ You can also change the `target=""`.
 ## How
 
 `post-links` creates a hidden form with and submits it via `POST` everytime a `<a method="post">` is clicked.
+
+## Methods
+
+```js
+import PostLinks from 'post-links'
+
+// Search for all <a method="post">
+PostLinks.seek()
+
+// Opens a URL programatically on `target` with the data on `dataObject`
+PostLinks.open(url, (dataObject = {}), (target = ''))
+```

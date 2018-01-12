@@ -1,4 +1,4 @@
-let initialized = false
+let formInitialized = false
 let hiddenFormEl
 
 const h = (tag, props = {}) => {
@@ -9,13 +9,18 @@ const h = (tag, props = {}) => {
   return el
 }
 
-const openPostLink = function (e) {
+const handlePostClick = function (e) {
   e.preventDefault()
-  const dataObj = this.dataset
-
   // Let's get the action url from a href or a data-post-href attribute
-  hiddenFormEl.action = this.href
-  hiddenFormEl.target = this.getAttribute('target') || ''
+  submitHiddenForm(this.href, this.dataset, this.getAttribute('target'))
+}
+
+const submitHiddenForm = (href, dataObj, target = '') => {
+  // If form was not initialized, let's... initialize it.
+  if (!formInitialized) init()
+
+  hiddenFormEl.action = href
+  hiddenFormEl.target = target
 
   const dataKeys = Object.keys(dataObj)
   const formInputEls = hiddenFormEl.childNodes
@@ -40,7 +45,7 @@ const openPostLink = function (e) {
 }
 
 const init = () => {
-  initialized = true
+  formInitialized = true
   hiddenFormEl = h('form', {
     method: 'post',
     name: 'post-links',
@@ -51,14 +56,14 @@ const init = () => {
 
 export default {
   seek () {
-    if (!initialized) init()
     const linkEls = document.getElementsByTagName('a')
     for (let i = linkEls.length; i--;) {
       const linkEl = linkEls[i]
       if (linkEl.getAttribute('method') === 'post' && !linkEl.postLink) {
         linkEl.postLink = 1
-        linkEl.addEventListener('click', openPostLink)
+        linkEl.addEventListener('click', handlePostClick)
       }
     }
-  }
+  },
+  open: submitHiddenForm
 }

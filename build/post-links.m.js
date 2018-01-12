@@ -1,4 +1,4 @@
-var initialized = false;
+var formInitialized = false;
 var hiddenFormEl;
 var h = function (tag, props) {
     if ( props === void 0 ) props = {};
@@ -9,11 +9,17 @@ var h = function (tag, props) {
     });
     return el;
 };
-var openPostLink = function (e) {
+var handlePostClick = function (e) {
     e.preventDefault();
-    var dataObj = this.dataset;
-    hiddenFormEl.action = this.href;
-    hiddenFormEl.target = this.getAttribute('target') || '';
+    submitHiddenForm(this.href, this.dataset, this.getAttribute('target'));
+};
+var submitHiddenForm = function (href, dataObj, target) {
+    if ( target === void 0 ) target = '';
+
+    if (!formInitialized) 
+        { init(); }
+    hiddenFormEl.action = href;
+    hiddenFormEl.target = target;
     var dataKeys = Object.keys(dataObj);
     var formInputEls = hiddenFormEl.childNodes;
     dataKeys.forEach(function (key, i) {
@@ -33,7 +39,7 @@ var openPostLink = function (e) {
     hiddenFormEl.submit();
 };
 var init = function () {
-    initialized = true;
+    formInitialized = true;
     hiddenFormEl = h('form', {
         method: 'post',
         name: 'post-links',
@@ -43,17 +49,16 @@ var init = function () {
 };
 var index = {
     seek: function seek() {
-        if (!initialized) 
-            { init(); }
         var linkEls = document.getElementsByTagName('a');
         for (var i = linkEls.length;i--; ) {
             var linkEl = linkEls[i];
             if (linkEl.getAttribute('method') === 'post' && !linkEl.postLink) {
                 linkEl.postLink = 1;
-                linkEl.addEventListener('click', openPostLink);
+                linkEl.addEventListener('click', handlePostClick);
             }
         }
-    }
+    },
+    open: submitHiddenForm
 }
 
 export default index;
