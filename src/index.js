@@ -12,7 +12,7 @@ const h = (tag, props = {}) => {
 const handlePostClick = function (e) {
   e.preventDefault()
   // Let's get the action url from a href or a data-post-href attribute
-  submitHiddenForm(this.href, this.dataset, this.getAttribute('target'))
+  submitHiddenForm(this.href, this.dataset, this.getAttribute('target') || '')
 }
 
 const submitHiddenForm = (href, dataObj, target = '') => {

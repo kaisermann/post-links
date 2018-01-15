@@ -1,11 +1,11 @@
 {
   "name": "post-links",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "build/post-links.js",
   "scripts": {
-    "build": "microbundle ",
-    "dev": "microbundle watch"
+    "build": "microbundle --name='PostLinks'",
+    "dev": "microbundle  --name='PostLinks' watch"
   },
   "repository": {
     "type": "git",
