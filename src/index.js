@@ -39,13 +39,8 @@ const submitHiddenForm = (href, dataObj, target = '') => {
 }
 
 const findClosest = (tagName, el) => {
-  while (el) {
-    if ((el.nodeName || el.tagName) === tagName) {
-      return el
-    }
-    el = el.parentNode
-  }
-  return null
+	while(el && el.tagName !== tagName) el = el.parentNode
+	return el
 }
 
 const init = () => {
