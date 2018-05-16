@@ -29,8 +29,8 @@ You can also change the `target=""`.
 ```js
 import PostLinks from 'post-links'
 
-// Search for all <a method="post">
-PostLinks.seek()
+// Search for a click on all current and future <a method="post">
+PostLinks.listen()
 
 // Opens a URL programatically on `target` with the data on `dataObject`
 PostLinks.open(url, (dataObject = {}), (target = ''))

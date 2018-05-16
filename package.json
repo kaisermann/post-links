@@ -1,30 +1,32 @@
 {
   "name": "post-links",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
-  "main": "build/post-links.js",
+  "main": "dist/post-links.js",
+  "files": [
+    "build/"
+  ],
   "scripts": {
     "build": "microbundle --name='PostLinks'",
-    "dev": "microbundle --name='PostLinks' watch"
+    "start": "microbundle --name='PostLinks' watch"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kaisermann/post-links.git"
   },
   "author": "Christian Kaisermann <christian@kaisermann.me>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/kaisermann/post-links/issues"
   },
   "homepage": "https://github.com/kaisermann/post-links#readme",
   "devDependencies": {
-    "microbundle": "^0.2.4",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-react": "^7.5.1",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "microbundle": "^0.2.4"
   }
 }

@@ -9,12 +9,6 @@ const h = (tag, props = {}) => {
   return el
 }
 
-const handlePostClick = function (e) {
-  e.preventDefault()
-  // Let's get the action url from a href or a data-post-href attribute
-  submitHiddenForm(this.href, this.dataset, this.getAttribute('target') || '')
-}
-
 const submitHiddenForm = (href, dataObj, target = '') => {
   // If form was not initialized, let's... initialize it.
   if (!formInitialized) init()
@@ -44,6 +38,16 @@ const submitHiddenForm = (href, dataObj, target = '') => {
   hiddenFormEl.submit()
 }
 
+const findClosest = (tagName, el) => {
+  while (el) {
+    if ((el.nodeName || el.tagName) === tagName) {
+      return el
+    }
+    el = el.parentNode
+  }
+  return null
+}
+
 const init = () => {
   formInitialized = true
   hiddenFormEl = h('form', {
@@ -55,15 +59,14 @@ const init = () => {
 }
 
 export default {
-  seek () {
-    const linkEls = document.getElementsByTagName('a')
-    for (let i = linkEls.length; i--;) {
-      const linkEl = linkEls[i]
-      if (linkEl.getAttribute('method') === 'post' && !linkEl.postLink) {
-        linkEl.postLink = 1
-        linkEl.addEventListener('click', handlePostClick)
+  listen () {
+    window.addEventListener('click', event => {
+      const el = findClosest('A', event.target || event.srcElement)
+      if (el && el.getAttribute('method') === 'post') {
+        event.preventDefault()
+        submitHiddenForm(el.href, el.dataset, el.getAttribute('target') || '')
       }
-    }
+    })
   },
   open: submitHiddenForm
 }
